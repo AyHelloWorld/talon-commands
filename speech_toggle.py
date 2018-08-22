@@ -1,5 +1,6 @@
 from talon.api import lib
 from talon.voice import Context, ContextGroup, talon
+from talon.engine import engine
 from talon import app
 
 def set_enabled(enable):
@@ -21,8 +22,14 @@ set_enabled(talon.enabled)
 sleep_group = ContextGroup('sleepy')
 sleepy = Context('sleepy', group=sleep_group)
 
+
+
 sleepy.keymap({
     'chow mein': lambda m: set_enabled(False),
     'kung pow': lambda m: set_enabled(True),
+
+    'dragon mode': [lambda m: set_enabled(False), lambda m: engine.mimic('wake up'.split())],
+    'talon mode': [lambda m: set_enabled(True), lambda m: engine.mimic('go to sleep'.split())],
+
 })
 sleep_group.load()
